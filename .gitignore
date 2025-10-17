@@ -1,0 +1,20 @@
+# dependencies
+**/node_modules/
+
+# hardhat outputs
+fhevm-hardhat-template/artifacts/
+fhevm-hardhat-template/cache/
+fhevm-hardhat-template/coverage/
+fhevm-hardhat-template/deployments/
+
+# next build
+site/.next/
+site/out/
+
+# logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# macOS
+.DS_Store
