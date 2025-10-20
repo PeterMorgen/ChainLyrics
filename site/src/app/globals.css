@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+body {
+  background: linear-gradient(to bottom right, rgb(15, 23, 42), rgb(88, 28, 135), rgb(15, 23, 42));
+  color: white;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s;
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.glass-button:active {
+  transform: scale(0.95);
+}
+
+.gradient-text {
+  background: linear-gradient(to right, rgb(192, 132, 252), rgb(96, 165, 250));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wave-bar {
+  width: 0.25rem;
+  background: linear-gradient(to top, rgb(168, 85, 247), rgb(96, 165, 250));
+  border-radius: 9999px;
+  animation: wave 2s ease-in-out infinite;
+}
+
+/* 音波动画 */
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1); }
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-900/50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-purple-600/50 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-purple-500/70;
+}
+
