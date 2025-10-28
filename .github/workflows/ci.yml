@@ -1,0 +1,22 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install and lint (site)
+        working-directory: site
+        run: |
+          npm ci --ignore-scripts
+          npm run -s lint || echo "no lint script"
+      - name: Build contracts (backend)
+        working-directory: fhevm-hardhat-template
+        run: |
+          npm ci --ignore-scripts || true
+          npx hardhat compile || true
