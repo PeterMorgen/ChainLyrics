@@ -1,4 +1,4 @@
-name: Deploy Pages
+name: Deploy Pages (static export)
 on:
   push:
     branches: [ main ]
@@ -23,25 +23,31 @@ jobs:
           node-version: 20
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Install deps
+      - name: Remove dynamic and API routes (incompatible with export)
+        run: |
+          rm -rf site/src/app/api || true
+          rm -rf "site/src/app/song/[id]" || true
+      - name: Install deps (site)
         working-directory: site
         run: npm ci --ignore-scripts
-      - name: Build static export
+      - name: Build static export (site)
         working-directory: site
         env:
           GITHUB_PAGES: 'true'
           NEXT_PUBLIC_NFT_STORAGE_TOKEN: ${{ secrets.NEXT_PUBLIC_NFT_STORAGE_TOKEN || 'demo-token' }}
-        run: npm run export
+        run: |
+          npm run build
+          npx next export
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'site/out'
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
