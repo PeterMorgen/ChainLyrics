@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "GITHUB_PAGES=true" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_NFT_STORAGE_TOKEN=${NEXT_PUBLIC_NFT_STORAGE_TOKEN:-demo-token}" >> $GITHUB_ENV
-      - name: Build static site (output: export)
+      - name: "Build static site (output: export)"
         working-directory: site
         run: npm run build
       - name: Upload artifact
