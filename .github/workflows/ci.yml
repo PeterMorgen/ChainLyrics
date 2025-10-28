@@ -1,7 +1,7 @@
 name: build-and-deploy
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 permissions:
@@ -21,22 +21,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
       - name: Sanitize for static export
         run: |
           rm -rf site/src/app/api || true
           rm -rf "site/src/app/song/[id]" || true
-      - name: Install deps
+      - name: Install dependencies
         working-directory: site
         run: npm ci --ignore-scripts
+      - name: Set env for Pages
+        run: |
+          echo "GITHUB_PAGES=true" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_NFT_STORAGE_TOKEN=${NEXT_PUBLIC_NFT_STORAGE_TOKEN:-demo-token}" >> $GITHUB_ENV
       - name: Build static site (output: export)
         working-directory: site
-        env:
-          GITHUB_PAGES: 'true'
-          NEXT_PUBLIC_NFT_STORAGE_TOKEN: ${{ secrets.NEXT_PUBLIC_NFT_STORAGE_TOKEN || 'demo-token' }}
         run: npm run build
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: site/out
